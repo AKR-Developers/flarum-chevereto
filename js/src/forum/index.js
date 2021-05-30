@@ -17,7 +17,7 @@ function startListen() {
                 );
             }
             if (e.data.message && app.composer.editor) {
-                app.composer.editor.insertAt(-1, e.data.message)
+                app.composer.editor.insertAtCursor(e.data.message)
             }
         }
     });
