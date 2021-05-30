@@ -1,15 +1,9 @@
-jasper-chevereto:
+akr-chevereto:
     admin:
-        permissions:
-            upload: Chevereto Upload
-        setting:
-            title: Chevereto Upload Setting
-            src: Chevereto's popup upload plugin(pup.js) source URL
-            url: URL of the target Chevereto website
-            auto-insert: Embed codes to auto insert in the target editable content
-            lang: Language
-        buttons:
-            save: Save settings
-        AdminNav:
-            description: >
-                Set up chevereto image hosting extension
+      setting:
+         url: URL of the target Chevereto website
+         insert_type: Embed codes to auto insert in the target editable content
+    forum:
+      composer:
+        upload_button: Upload picture
+        upload_button_details: Upload and insert picture

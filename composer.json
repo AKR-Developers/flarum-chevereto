@@ -1,16 +1,14 @@
 {
-    "name": "zhujia18/chevereto",
-    "description": "Chevereto image hosting upload extension for the Flarum forum, using Chevereto's popup upload plugin(PUP). The popup upload plugin (PUP) is a small file that allows Chevereto based websites to provide external image uploading via a small JavaScript file.",
+    "name": "akr/chevereto",
+    "description": "A flarum extension that helps you upload pictures to remote server powered by Chevereto.",
     "keywords": [
         "flarum",
-        "chevereto",
-        "image hosting",
-        "pup"
+        "chevereto"
     ],
     "type": "flarum-extension",
     "license": "MIT",
     "require": {
-        "flarum/core": "^0.1.0-beta.8"
+        "flarum/core": "^1.0.0"
     },
     "extra": {
         "flarum-extension": {
@@ -23,20 +21,5 @@
                 "backgroundPosition": "center"
             }
         }
-    },
-    "authors": [{
-        "name": "Jasper",
-        "email": "zhujiap.cn@gmail.com",
-        "homepage": "https://zasper.me"
-    }],
-    "autoload": {
-        "psr-4": {
-          "Zhujia18\\Chevereto\\": "src/"
-        }
-      },
-    "support": {
-        "email": "zhujiap.cn@gmail.com",
-        "issues": "https://github.com/zhujia18/flarum-chevereto/issues",
-        "source": "https://github.com/zhujia18/flarum-chevereto"
     }
 }

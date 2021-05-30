@@ -1,20 +1,21 @@
 <?php
 
-namespace Zhujia18\Chevereto;
+namespace Akr\Chevereto;
 
 use Flarum\Extend;
-use Illuminate\Contracts\Events\Dispatcher;
 
 return [
     (new Extend\Frontend('admin'))
-        ->css(__DIR__ . '/resources/less/admin/settingsPage.less')
         ->js(__DIR__ . '/js/dist/admin.js'),
     (new Extend\Frontend('forum'))
-        ->css(__DIR__ . '/resources/less/forum/cheveretoButton.less')
         ->js(__DIR__ . '/js/dist/forum.js'),
     new Extend\Locales(__DIR__ . '/resources/locale'),
-    function (Dispatcher $events) {
-        $events->subscribe(Listeners\AddCheveretoApi::class);
-        $events->subscribe(Listeners\LoadSettingsFromDatabase::class);
-    },
+    (new Extend\Settings)
+        ->serializeToForum('akr-chevereto.url', 'akr-chevereto.url')
+        ->serializeToForum('akr-chevereto.insert_type', 'akr-chevereto.insert_type', function ($value) {
+            if (!$value) {
+                $value = 'markdown-embed-full';
+            }
+            return $value;
+        })
 ];

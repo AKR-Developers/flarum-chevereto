@@ -1,70 +1,58 @@
-import Component from 'flarum/Component';
-import app from 'flarum/app';
+import Component from 'flarum/common/Component';
+import Button from 'flarum/common/components/Button';
+import classList from 'flarum/common/utils/classList';
+import Tooltip from 'flarum/common/components/Tooltip';
 
 export default class CheveretoButton extends Component {
-    init() {
-        this.fields = [
-            'src',
-            'url',
-            'autoinsert',
-            'lang',
-        ];
-        this.settingsPrefix = 'jasper.chevereto';
-        this.values = {};
-        this.fields.forEach(key =>
-            this.values[key] = app.forum.attribute(this.addPrefix(key))
+    view() {
+        const size = this.popupSize()
+        return (
+            <Tooltip text={app.translator.trans('akr-chevereto.forum.composer.upload_button_details')}>
+                <Button
+                    className={classList([
+                        'Button',
+                        'hasIcon',
+                    ])}
+                    onclick={() => {
+                        window.open(app.forum.attribute('akr-chevereto.url'), Date.now()
+                            , 'width=' +
+                            size.w +
+                            ',height=' +
+                            size.h +
+                            ',top=' +
+                            size.t +
+                            ',left=' +
+                            size.l)
+                    }}
+                    icon={'fas fa-file-upload'}
+                >
+                    {app.translator.trans('akr-chevereto.forum.composer.upload_button')}
+                </Button>
+            </Tooltip>
         );
     }
 
-    view() {
-        return m('div', {
-            id: "chevereto-pup-container"
-        }, [m('div', {
-            id: "chevereto-mark"
-        })]);
-    }
-
-    loadChevereto() {
-        var cheveretoBtn = document.getElementsByClassName("chevereto-pup-button")[0];
-        if (cheveretoBtn) {
-            return;
-        }
-        if (document.getElementById('chevereto')) {
-            return;
-        }
-        var script = document.createElement("script");
-        script.id = ('chevereto');
-        script.type = "text/javascript";
-        script.async = true;
-        script.setAttribute('data-sibling-pos', 'after');
-        script.setAttribute('data-sibling', '#chevereto-mark');
-        if (this.values['src']) {
-            script.src = this.values['src'];
-        }
-        if (this.values['url']) {
-            script.setAttribute('data-url', this.values['url']);
-        }
-        if (this.values['lang']) {
-            script.setAttribute('data-lang', this.values['lang']);
-        }
-        if (this.values['autoinsert']) {
-            script.setAttribute('data-auto-insert', this.values['autoinsert']);
-        }
-        document.head.appendChild(script);
-    }
-
-    unloadChevereto() {
-        var cheveretoBtn = document.getElementsByClassName("chevereto-pup-button")[0];
-        if (cheveretoBtn) {
-            return;
-        }
-        var script = document.getElementById('chevereto');
-        if (script) {
-            document.head.removeChild(script);
-        }
-    }
-
-    addPrefix(key) {
-        return this.settingsPrefix + '.' + key;
+    popupSize() {
+        const client = {
+            l: window.screenLeft != undefined ? window.screenLeft : screen.left,
+            t: window.screenTop != undefined ? window.screenTop : screen.top,
+            w: window.innerWidth
+                ? window.innerWidth
+                : document.documentElement.clientWidth
+                    ? document.documentElement.clientWidth
+                    : screen.width,
+            h: window.innerHeight
+                ? window.innerHeight
+                : document.documentElement.clientHeight
+                    ? document.documentElement.clientHeight
+                    : screen.height
+        };
+        const size = {
+            w: (720 / client.w > 0.5) ? client.w * 0.5 : 720,
+            h: (690 / client.h > 0.85) ? client.h * 0.85 : 690
+        };
+        size.l = Math.trunc(client.w / 2 - size.w / 2 + client.l)
+        size.t = Math.trunc(client.h / 2 - size.h / 2 + client.t)
+        return size
     }
 }
